@@ -70,12 +70,12 @@ visualize_prior <- function(alternative = function(x) dcauchy(x, scale = sqrt(2)
 }
 
 
-#' Visualize predictions of null and alternative hypothesis for a
-#' Bayesian two-group t-test
+#' Visualize hypotheses' predictions for a Bayesian two-group t-test
 #' 
-#' By specifying an observed effect (t-value) one can also obtain an
-#' illustration of the ratio of the marginal likelihoods, i.e., an
-#' illustration of the Bayes factor
+#' Visualizes the predictions of the null and an alternative hypothesis.
+#' By specifying an observed effect (observed t-value), an illustration
+#' of the ratio of the marginal likelihoods, i.e., an
+#' illustration of the Bayes factor is displayed.
 #' 
 #' @param alternative A function object. The default is a Cauchy prior
 #'     with scaling parameter `sqrt(2) / 2` as is the default in package

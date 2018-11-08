@@ -1,10 +1,10 @@
 
-#' Compute statistical "power" for the default t-test Bayes factor
+#' Compute "power" for the default t-test Bayes factor
 #'
 #' For a given N, this function returns the Bayes factor that will be
 #' exceeded with a specified probability in a t-test. Transfers the
 #' frequentist concept of statistical power to Bayes factors. Uses the
-#' default Bayesian t test implemented in the package `BayesFactor`. 
+#' default Bayesian t test implemented in the package `BayesFactor`.
 #' 
 #' @param N The total sample size over both groups in the independent
 #'     groups t test.
@@ -147,9 +147,14 @@ estimate_expected_bf <- function(effect_size, sample_sizes,
 #' Compute quantiles for the distribution of Bayes factors
 #'
 #' @param dat A `data.frame` returned by `estimate_expected_bf`
-#' 
+#' @param quantiales The quantiles computed for the distribution of
+#'     Bayes factors. Passed to function `quantile`.
+#' @return A `data.frame` in long format containing quantiles per sample
+#'     size.
 #' @importFrom reshape2 melt
 #' @importFrom plyr adply
+#'
+#' @export
 BF_quantiles <- function(dat, quantiles = c(0.2, 0.5, 0.8)) {
   ## obtain quantiles of log BF by sample size
   arr <- tapply(dat$logBF, dat$N, quantile, probs = quantiles,
