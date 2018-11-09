@@ -8,7 +8,20 @@ BF_quantiles(dat, quantiles = c(0.2, 0.5, 0.8))
 }
 \arguments{
 \item{dat}{A `data.frame` returned by `estimate_expected_bf`}
+
+\item{quantiales}{The quantiles computed for the distribution of
+Bayes factors. Passed to function `quantile`.}
+}
+\value{
+A `data.frame` in long format containing Bayes factor
+    quantiles per sample size.
 }
 \description{
 Compute quantiles for the distribution of Bayes factors
+}
+\examples{
+
+bfs <- bf_distribution(effect_size = 0.5, sample_sizes = seq(50, 350, by = 50), n_bayes_factors = 300)
+BF_quantiles(bfs)
+
 }

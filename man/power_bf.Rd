@@ -2,7 +2,7 @@
 % Please edit documentation in R/Power.R
 \name{power_bf}
 \alias{power_bf}
-\title{Compute statistical "power" for the default t-test Bayes factor}
+\title{Compute "power" for the default t-test Bayes factor}
 \usage{
 power_bf(N, effect_size, nsim = 1000, rscale = sqrt(2)/2,
   probability = 0.8, say_result = TRUE)

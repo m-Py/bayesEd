@@ -187,8 +187,7 @@ visualize_predictions <- function(alternative = function(x) dcauchy(x, scale = s
   }
 }
 
-#' Generate multiple marginal likelihoods in a given interval of
-#' t-values
+#' Generate marginal likelihoods in a given interval of t-values
 #' 
 #' @param alternative A function object. The default is a Cauchy prior
 #'     with scaling parameter `sqrt(2) / 2` as is the default in package
@@ -202,7 +201,6 @@ visualize_predictions <- function(alternative = function(x) dcauchy(x, scale = s
 #' 
 #' @return A data.frame of two columns: Column x contains the t-values, 
 #'   column y contains the marginal likelihoods
-#'
 #'
 #' @examples
 #' sample_likelihoods(n1 = 30, n2 = 30, from = -3, to = 3)
@@ -226,8 +224,7 @@ sample_likelihoods <- function(alternative = function(x) dcauchy(x, scale = sqrt
   return(data.frame(x = observed_ts, y = predictions))
 }
 
-#' Compute the marginal likelihood of an observed t-value given a
-#' hypothesis
+#' Compute the marginal likelihood of an observed t-value
 #' 
 #' This function can be used to compute a Bayes factor as the ratio
 #' of two marginal likelihoods.
@@ -245,8 +242,18 @@ sample_likelihoods <- function(alternative = function(x) dcauchy(x, scale = sqrt
 #'     prior on Cohen's d.
 #'
 #' @examples
-#' ## Standard Cauchy prior:
-#' marginal_likelihood(3, n1 = 30, n2 = 30)
+#' ## Compute Bayes factor for standard Cauchy prior:
+#' n1 <- 100
+#' n2 <- 100
+#' sample1 <- rnorm(n1, 0.2, 1)
+#' sample2 <- rnorm(n1, 0.2, 1)
+#' tvalue  <- t.test(sample1, sample2)$statistic
+#' ml_alt  <- marginal_likelihood(tvalue, n1 = n1, n2 = n2)
+#' bf10    <- ml_alt / dt(tvalue, n1 + n2 - 2)
+#' # Compare:
+#' BayesFactor::ttestBF(sample1, sample2)
+#' 
+#' 
 #' ## Normal prior - N(0, 0.3)
 #' marginal_likelihood(3, function(x) dnorm(x, 0, 0.3), n1 = 30, n2 = 30)
 #'
@@ -283,7 +290,9 @@ marginal_likelihood <- function(observed_t,
 #' @param n2 The sample size in group 2
 #'
 #' @return The weighted likelihood of the observed t-value.
-
+#'
+#' @export
+#' 
 weighted_likelihood <- function(true_d, observed_t, 
                                 prior = function(x) dcauchy(x, scale = sqrt(2) / 2), 
                                 n1, n2) {
@@ -293,14 +302,14 @@ weighted_likelihood <- function(true_d, observed_t,
 }
 
                      
-#' Compute the non-centrality parameter for non-central t distribution
-#' from Cohen's d
+#' Compute non-centrality parameter for the non-central t distribution
 #' 
 #' @param d Cohen's d
 #' @param n1 Sample size in group 1
 #' @param n2 Sample size in group 2
 #' 
-#' @details See page 7 in Erdfelder, Faul, & Buchner (1996)
+#' @details See page 7 in Erdfelder, Faul, & Buchner (1996) for the
+#'     formula.
 #' 
 #' @return The non-centrality parameter
 #' 

@@ -2,8 +2,7 @@
 % Please edit documentation in R/Visualizations.R
 \name{ncp_from_d}
 \alias{ncp_from_d}
-\title{Compute the non-centrality parameter for non-central t distribution
-from Cohen's d}
+\title{Compute non-centrality parameter for the non-central t distribution}
 \usage{
 ncp_from_d(d, n1, n2)
 }
@@ -18,11 +17,11 @@ ncp_from_d(d, n1, n2)
 The non-centrality parameter
 }
 \description{
-Compute the non-centrality parameter for non-central t distribution
-from Cohen's d
+Compute non-centrality parameter for the non-central t distribution
 }
 \details{
-See page 7 in Erdfelder, Faul, & Buchner (1996)
+See page 7 in Erdfelder, Faul, & Buchner (1996) for the
+    formula.
 }
 \examples{
 ncp_from_d(0.3, 50, 50)

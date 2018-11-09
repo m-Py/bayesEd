@@ -2,8 +2,7 @@
 % Please edit documentation in R/Visualizations.R
 \name{marginal_likelihood}
 \alias{marginal_likelihood}
-\title{Compute the marginal likelihood of an observed t-value given a
-hypothesis}
+\title{Compute the marginal likelihood of an observed t-value}
 \usage{
 marginal_likelihood(observed_t, prior = function(x) dcauchy(x, scale =
   sqrt(2)/2), n1, n2)
@@ -30,8 +29,18 @@ This function can be used to compute a Bayes factor as the ratio
 of two marginal likelihoods.
 }
 \examples{
-## Standard Cauchy prior:
-marginal_likelihood(3, n1 = 30, n2 = 30)
+## Compute Bayes factor for standard Cauchy prior:
+n1 <- 100
+n2 <- 100
+sample1 <- rnorm(n1, 0.2, 1)
+sample2 <- rnorm(n1, 0.2, 1)
+tvalue  <- t.test(sample1, sample2)$statistic
+ml_alt  <- marginal_likelihood(tvalue, n1 = n1, n2 = n2)
+bf10    <- ml_alt / dt(tvalue, n1 + n2 - 2)
+# Compare:
+BayesFactor::ttestBF(sample1, sample2)
+
+
 ## Normal prior - N(0, 0.3)
 marginal_likelihood(3, function(x) dnorm(x, 0, 0.3), n1 = 30, n2 = 30)
 

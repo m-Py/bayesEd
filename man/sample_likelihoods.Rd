@@ -2,8 +2,7 @@
 % Please edit documentation in R/Visualizations.R
 \name{sample_likelihoods}
 \alias{sample_likelihoods}
-\title{Generate multiple marginal likelihoods in a given interval of
-t-values}
+\title{Generate marginal likelihoods in a given interval of t-values}
 \usage{
 sample_likelihoods(alternative = function(x) dcauchy(x, scale =
   sqrt(2)/2), n1, n2, from = -6, to = 6)
@@ -28,8 +27,7 @@ A data.frame of two columns: Column x contains the t-values,
   column y contains the marginal likelihoods
 }
 \description{
-Generate multiple marginal likelihoods in a given interval of
-t-values
+Generate marginal likelihoods in a given interval of t-values
 }
 \examples{
 sample_likelihoods(n1 = 30, n2 = 30, from = -3, to = 3)

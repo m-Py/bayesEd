@@ -2,8 +2,7 @@
 % Please edit documentation in R/Visualizations.R
 \name{visualize_predictions}
 \alias{visualize_predictions}
-\title{Visualize predictions of null and alternative hypothesis for a
-Bayesian two-group t-test}
+\title{Visualize hypotheses' predictions for a Bayesian two-group t-test}
 \usage{
 visualize_predictions(alternative = function(x) dcauchy(x, scale =
   sqrt(2)/2), n1, n2, from = -6, to = 6, lty = c(1, 1, 2), lwd = 3,
@@ -71,9 +70,10 @@ has an effect if an `observed_t` is passed.}
 \item{...}{additional parameters passed to `curve`}
 }
 \description{
-By specifying an observed effect (t-value) one can also obtain an
-illustration of the ratio of the marginal likelihoods, i.e., an
-illustration of the Bayes factor
+Visualizes the predictions of the null and an alternative hypothesis.
+By specifying an observed effect (observed t-value), an illustration
+of the ratio of the marginal likelihoods, i.e., an
+illustration of the Bayes factor is displayed.
 }
 \examples{
 ## Using the default cauchy prior

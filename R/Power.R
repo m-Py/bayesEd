@@ -105,14 +105,10 @@ power_bf <- function(N, effect_size, nsim = 1000, rscale = sqrt(2)/2,
 #'     hypothesis. Psychonomic Bulletin & Review, 16(2), 225–237.
 #'
 #' @examples 
-#' bfs <- estimate_expected_bf(effect_size = 0.5, sample_sizes = seq(50, 350, by = 50), n_bayes_factors = 300)
+#' bfs <- bf_distribution(effect_size = 0.5, sample_sizes = seq(50, 350, by = 50), n_bayes_factors = 300)
 #'
-#' ## Use `exp` to obtain the "normal" BF that is not logarithmic
+#' ## Use `exp` to obtain the "normal" BF (not logarithm of the Bayes factor)
 #' tapply(exp(bfs$logBF), bfs$N, median)
-#' 
-#' ## Compare "power" between different sample sizes:
-#' power <- 0.8
-#' tapply(exp(bfs$logBF), bfs$N, quantile,  probs = 1 - power)
 #'
 #' 
 #' @export
@@ -120,8 +116,8 @@ power_bf <- function(N, effect_size, nsim = 1000, rscale = sqrt(2)/2,
 #' @importFrom BayesFactor ttestBF
 #' @importFrom BayesFactor extractBF
 #' 
-estimate_expected_bf <- function(effect_size, sample_sizes,
-                                 n_bayes_factors, rscale=sqrt(2)/2) {
+bf_distribution <- function(effect_size, sample_sizes,
+                            n_bayes_factors, rscale=sqrt(2)/2) {
   ## store BFs for each repetition for one sample size:
   repetitions_bf <- vector(length = n_bayes_factors)
   ## store BFs by sample size:
@@ -149,17 +145,22 @@ estimate_expected_bf <- function(effect_size, sample_sizes,
 #' @param dat A `data.frame` returned by `estimate_expected_bf`
 #' @param quantiales The quantiles computed for the distribution of
 #'     Bayes factors. Passed to function `quantile`.
-#' @return A `data.frame` in long format containing quantiles per sample
-#'     size.
+#' @return A `data.frame` in long format containing Bayes factor
+#'     quantiles per sample size.
 #' @importFrom reshape2 melt
 #' @importFrom plyr adply
 #'
+#' @examples
+#' 
+#' bfs <- bf_distribution(effect_size = 0.5, sample_sizes = seq(50, 350, by = 50), n_bayes_factors = 300)
+#' BF_quantiles(bfs)
+#'
 #' @export
+#' 
 BF_quantiles <- function(dat, quantiles = c(0.2, 0.5, 0.8)) {
   ## obtain quantiles of log BF by sample size
   arr <- tapply(dat$logBF, dat$N, quantile, probs = quantiles,
                 simplify = FALSE)
-  
   ## use plyr to convert array to data.frame
   dfw <- plyr::adply(arr, 1)
   ## use reshape to create long data
@@ -178,6 +179,30 @@ BF_quantiles <- function(dat, quantiles = c(0.2, 0.5, 0.8)) {
   long_quantiles$rscale   <- unique(dat$rscale)
   return(long_quantiles)
 }
+
+#' Plot the distribution of Bayes factors
+#'
+#' Plots  quantiles of Bayes factors by sample size.
+#'
+#' @param BF_quantiles A `data.frame` returned by `BF_quantiles`.
+#' @param thresholds A vector of thresholds to be drawn
+#'     horizontally. May for example illustrate some thresholds over
+#'     which Bayes factors are deemed to be informative.
+#' @param ylim A vector of two values indicating the limits of the
+#'     y-axis. Given on a log-scale.
+#' @param main The title of the plot.
+#' @param axis A character vector indicating what y-axis is to
+#'     drawn. Can be "log" for the log-axis, "standard" for
+#'     non-logarithmic axis, or both (i.e., c("log", "standard") which
+#'     is also the default)
+#' 
+#' @examples 
+#' bfs <- bf_distribution(effect_size = 0.5, sample_sizes = seq(50, 350, by = 50), n_bayes_factors = 300)
+#' quants <- BF_quantiles(bfs)
+#' plot_BF_quantiles(quants, thresholds = c()
+#' legend("topleft", legend = paste0("PR ", c(80, 50, 20)), pch = 3, col = 3:1, bty = "n")
+#'
+#' @export
 
 plot_BF_quantiles <- function(BF_quantiles, thresholds=NULL, ylim=NULL,
                               main = "", axis = c("log", "standard")) {
@@ -220,7 +245,8 @@ plot_BF_quantiles <- function(BF_quantiles, thresholds=NULL, ylim=NULL,
   ## indicate the neutral evidence line if it was required by the user
   cols = rep("darkgrey", length(thresholds))
   cols[which(thresholds == 1)] <- "black"
-  abline(h = log(thresholds), lty = 2, lwd = 1.5, col = cols)
+  if (!is.null(thresholds))
+    abline(h = log(thresholds), lty = 2, lwd = 1.5, col = cols)
   
   ## Label x-axis
   axis(1, 20, "n", tick = FALSE)
@@ -229,6 +255,8 @@ plot_BF_quantiles <- function(BF_quantiles, thresholds=NULL, ylim=NULL,
   on.exit(par(mar = def_mar))
 }
 
+## Add an axis on the right side of the plot for "normal" BFs in
+## addition to log BFs
 add_normal_bf_scale <- function(by = 1) {
   label_bf_lim <- seq(-30, 30, by = by)
   labs <- round(exp(label_bf_lim), 2)
