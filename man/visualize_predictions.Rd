@@ -79,10 +79,10 @@ illustration of the Bayes factor is displayed.
 }
 \examples{
 ## Using the default cauchy prior
-visualize_predictions(n1 = 100, n2 = 100, observed_t = 3, lty = c(1, 1, 2))
+visualize_predictions(n1 = 100, n2 = 100, observed_t = 3)
 ## Using a wide Cauchy prior
 visualize_predictions(function(x) dcauchy(x, scale = 1), 
-n1 = 100, n2 = 100, observed_t = 3, lty = c(1, 1, 2))
+n1 = 100, n2 = 100, observed_t = 3)
 ## Using a normal prior (M = 0, SD = 0.4)
 visualize_predictions(function(x) dnorm(x, 0, 0.4), 
 n1 = 100, n2 = 100, observed_t = 3, lty = c(1, 1, 2))

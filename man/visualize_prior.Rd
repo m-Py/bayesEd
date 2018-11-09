@@ -37,12 +37,12 @@ Visualize a prior on Cohen's d for a Bayesian t-test
 }
 \examples{
 ## Standard cauchy prior:
-visualize_prior(lty = 2, lwd = 2)
+visualize_prior()
 ## Wide cauchy prior:
 visualize_prior(function(x) dcauchy(x, scale = 1))
 ## Normal prior with M = 0 and SD = 0.4
 visualize_prior(function(x) dnorm(x, 0, 0.4))
-## Point prior with Cohen's d = 0.4
+## Point prior on Cohen's d = 0.4
 visualize_prior(0.4)
 
 }

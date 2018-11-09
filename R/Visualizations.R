@@ -27,12 +27,12 @@
 #' 
 #' @examples
 #' ## Standard cauchy prior:
-#' visualize_prior(lty = 2, lwd = 2)
+#' visualize_prior()
 #' ## Wide cauchy prior:
 #' visualize_prior(function(x) dcauchy(x, scale = 1))
 #' ## Normal prior with M = 0 and SD = 0.4
 #' visualize_prior(function(x) dnorm(x, 0, 0.4))
-#' ## Point prior with Cohen's d = 0.4
+#' ## Point prior on Cohen's d = 0.4
 #' visualize_prior(0.4)
 #'
 #' @references
@@ -134,10 +134,10 @@ visualize_prior <- function(alternative = function(x) dcauchy(x, scale = sqrt(2)
 #' 
 #' @examples 
 #' ## Using the default cauchy prior
-#' visualize_predictions(n1 = 100, n2 = 100, observed_t = 3, lty = c(1, 1, 2))
+#' visualize_predictions(n1 = 100, n2 = 100, observed_t = 3)
 #' ## Using a wide Cauchy prior
 #' visualize_predictions(function(x) dcauchy(x, scale = 1), 
-#' n1 = 100, n2 = 100, observed_t = 3, lty = c(1, 1, 2))
+#' n1 = 100, n2 = 100, observed_t = 3)
 #' ## Using a normal prior (M = 0, SD = 0.4)
 #' visualize_predictions(function(x) dnorm(x, 0, 0.4), 
 #' n1 = 100, n2 = 100, observed_t = 3, lty = c(1, 1, 2))
