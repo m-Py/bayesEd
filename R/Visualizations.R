@@ -65,7 +65,7 @@ visualize_prior <- function(alternative = function(x) dcauchy(x, scale = sqrt(2)
   if (null) {
     abline(v = 0, col = "#005A31", lwd = lwd)
     legend("topleft", lwd = lwd, legend = c("Null", "Alternative"), 
-           cex = 1.2, col = c("#005A31", "red"), lty = c(2,2), bty = "n")
+           cex = 1.2, col = c("#005A31", "red"), lty = 1, bty = "n")
   }
 }
 
@@ -88,17 +88,12 @@ visualize_prior <- function(alternative = function(x) dcauchy(x, scale = sqrt(2)
 #' @param n2 The sample size in group 2
 #' @param from the left margin of the x-axis
 #' @param to the right margin of the x-axis
-#' @param lty The line type; lty[1] specifies the line type for the null
-#'     hypothesis; lty[2] specifies the line type for the alternative
-#'     hypothesis; lty[3] specifies the line type for the alternative
-#'     hypothesis (only has an effect if an observed effect size is
-#'     specified via argument `observed_t`)
 #' @param col Specify the coloring of the plot. col[1] specifies the
-#'     color for the null hypothesis; lty[2] specifies the color for the
-#'     alternative hypothesis; lty[3] specifies the color for the line
+#'     color for the null hypothesis; col[2] specifies the color for the
+#'     alternative hypothesis; col[3] specifies the color for the line
 #'     the illustrates the observed effect (only has an effect if an
 #'     observed effect size is specified via argument `observed_t`);
-#'     lty[4] specifies the color of the points at the intersection of
+#'     col[4] specifies the color of the points at the intersection of
 #'     the observed effect and the curves for the hypotheses (only has
 #'     an effect if an observed effect size is specified via argument
 #'     `observed_t`)
@@ -119,12 +114,18 @@ visualize_prior <- function(alternative = function(x) dcauchy(x, scale = sqrt(2)
 #' @param legend_placement A keyword passed to `legend` to indicate
 #'     where the legend has to be placed. Defaults to "topleft".  Only
 #'     has an effect if an `observed_t` is passed.
+#' @param legend_content Specify the content of the legend. 
+#'     legend_content[1] refers to the label for the null hypothesis; 
+#'     legend_content[2] refers to the label for the alternative hypothesis; 
+#'     legend_content[3] refers to the label for the observed effect; 
+#'     (only has an effect if an
+#'     observed effect size is specified via argument `observed_t`);
 #' @param ... additional parameters passed to `curve`
 #'
 #' @references
 #'
 #' Morey, R. D., & Rouder, J. N. (2015). BayesFactor: Computation of
-#'     bayes factors for common designs. Retrieved from
+#'     Bayes factors for common designs. Retrieved from
 #'     https://CRAN.R-project.org/package=BayesFactor
 #'
 #' Rouder, J. N., Speckman, P. L., Sun, D., Morey, R. D., & Iverson,
@@ -144,32 +145,39 @@ visualize_prior <- function(alternative = function(x) dcauchy(x, scale = sqrt(2)
 #' @export
 #' 
 visualize_predictions <- function(alternative = function(x) dcauchy(x, scale = sqrt(2) / 2),
-                                  n1, n2, from = -6, to = 6,
-                                  lty = c(1, 1, 2), lwd = 3,
+                                  n1, n2, from = -6, to = 6, lwd = 3,
                                   col = c("#005A31", "red", "black", "orange"),
                                   observed_t = NULL, frame.plot = FALSE,
                                   xlab = "t-value", BFx = from + 0.1,
                                   BFy = 0.1, BF10 = TRUE,
-                                  legend_placement = "topleft", ...) {
+                                  legend_placement = "topleft", 
+                                  legend_content = c("Null", "Alternative", "Observed"), 
+                                  ...) {
   ## 1. Draw null predictions
   nullhyp <- function(x) dt(x, n1 + n2 - 2)
-  curve(nullhyp, from = from , to = to, col = col[1], lty = lty[1], lwd = lwd[1],
+  curve(nullhyp, from = from , to = to, col = col[1], lwd = lwd[1],
         frame.plot = frame.plot, yaxt = "n", ylab = "", xlab = xlab, ...)
   maxdensity <- nullhyp(0)
+  ## Prepare the legend
+  options <- legend_content[1]
+  lty <- 1
+  col_legend <- col[1]
   ## 2. Draw alternative hypothesis predictions
   if (!is.null(alternative)) {
     predictions_alt <- sample_likelihoods(alternative, n1, n2, from, to)
     points(predictions_alt$x, predictions_alt$y, type = "l", col = col[2],
-           lty = lty[2], lwd = lwd)
-    legend(legend_placement, lwd = 3, legend = c("Null", "Alternative"), 
-           cex = 1.2, col = c("#005A31", "red"), lty = c(2,2), bty = "n")
+           lwd = lwd)
     maxdensity <- max(maxdensity, predictions_alt$y)
+    ## For legend:
+    options <- c(options, legend_content[2])
+    lty  <- c(lty, 1)
+    col_legend <- c(col_legend, col[2])
   }
   ## 3. Illustrate the observed effect and the Bayes factor
   if (!is.null(observed_t)) {
     null_likelihood <- nullhyp(observed_t)
     lines(x = rep(observed_t, 2), y = c(0, maxdensity), 
-          col = col[3], lwd = lwd, lty = lty[3])
+          col = col[3], lwd = lwd, lty = 2)
     points(observed_t, null_likelihood, pch = 19, col = col[4], cex = 2)
     if (!is.null(alternative)) {
       alt_likelihood <- marginal_likelihood(observed_t, alternative, n1, n2)
@@ -184,7 +192,12 @@ visualize_predictions <- function(alternative = function(x) dcauchy(x, scale = s
       text(x = BFx, y = BFy, pos = 4, 
            labels = paste(displayBF, round(BF, 2)))
     }
+    options <- c(options, legend_content[3])
+    lty  <- c(lty, 2)
+    col_legend <- c(col_legend, col[3])
   }
+  legend(legend_placement, lwd = 3, legend = options, 
+         cex = 1.2, col = col_legend, lty = lty, bty = "n")
 }
 
 #' Generate marginal likelihoods in a given interval of t-values

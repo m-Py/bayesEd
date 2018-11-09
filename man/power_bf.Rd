@@ -56,7 +56,7 @@ power_bf(N = 1000, effect_size = 0.2, rscale = 0.2)
 }
 \references{
 Morey, R. D., & Rouder, J. N. (2015). BayesFactor: Computation of
-    bayes factors for common designs. Retrieved from
+    Bayes factors for common designs. Retrieved from
     https://CRAN.R-project.org/package=BayesFactor
 
 Rouder, J. N., Speckman, P. L., Sun, D., Morey, R. D., & Iverson,

@@ -5,10 +5,11 @@
 \title{Visualize hypotheses' predictions for a Bayesian two-group t-test}
 \usage{
 visualize_predictions(alternative = function(x) dcauchy(x, scale =
-  sqrt(2)/2), n1, n2, from = -6, to = 6, lty = c(1, 1, 2), lwd = 3,
+  sqrt(2)/2), n1, n2, from = -6, to = 6, lwd = 3,
   col = c("#005A31", "red", "black", "orange"), observed_t = NULL,
   frame.plot = FALSE, xlab = "t-value", BFx = from + 0.1,
-  BFy = 0.1, BF10 = TRUE, legend_placement = "topleft", ...)
+  BFy = 0.1, BF10 = TRUE, legend_placement = "topleft",
+  legend_content = c("Null", "Alternative", "Observed"), ...)
 }
 \arguments{
 \item{alternative}{A function object. The default is a Cauchy prior
@@ -27,18 +28,12 @@ are drawn.}
 
 \item{to}{the right margin of the x-axis}
 
-\item{lty}{The line type; lty[1] specifies the line type for the null
-hypothesis; lty[2] specifies the line type for the alternative
-hypothesis; lty[3] specifies the line type for the alternative
-hypothesis (only has an effect if an observed effect size is
-specified via argument `observed_t`)}
-
 \item{col}{Specify the coloring of the plot. col[1] specifies the
-color for the null hypothesis; lty[2] specifies the color for the
-alternative hypothesis; lty[3] specifies the color for the line
+color for the null hypothesis; col[2] specifies the color for the
+alternative hypothesis; col[3] specifies the color for the line
 the illustrates the observed effect (only has an effect if an
 observed effect size is specified via argument `observed_t`);
-lty[4] specifies the color of the points at the intersection of
+col[4] specifies the color of the points at the intersection of
 the observed effect and the curves for the hypotheses (only has
 an effect if an observed effect size is specified via argument
 `observed_t`)}
@@ -67,6 +62,13 @@ an effect if an `observed_t` is passed.}
 where the legend has to be placed. Defaults to "topleft".  Only
 has an effect if an `observed_t` is passed.}
 
+\item{legend_content}{Specify the content of the legend. 
+legend_content[1] refers to the label for the null hypothesis; 
+legend_content[2] refers to the label for the alternative hypothesis; 
+legend_content[3] refers to the label for the observed effect; 
+(only has an effect if an
+observed effect size is specified via argument `observed_t`);}
+
 \item{...}{additional parameters passed to `curve`}
 }
 \description{
@@ -88,7 +90,7 @@ n1 = 100, n2 = 100, observed_t = 3, lty = c(1, 1, 2))
 }
 \references{
 Morey, R. D., & Rouder, J. N. (2015). BayesFactor: Computation of
-    bayes factors for common designs. Retrieved from
+    Bayes factors for common designs. Retrieved from
     https://CRAN.R-project.org/package=BayesFactor
 
 Rouder, J. N., Speckman, P. L., Sun, D., Morey, R. D., & Iverson,
