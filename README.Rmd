@@ -1,7 +1,8 @@
 ---
 author: Martin Papenberg
 output: 
-  md_document
+  md_document:
+    variant: markdown_github
 bibliography: ./man/lit.bib
 ---
 
