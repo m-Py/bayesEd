@@ -124,7 +124,7 @@ library("BayesFactor")
 
     ## Bayes factor analysis
     ## --------------
-    ## [1] Null, mu1-mu2=0 : 6.485053 ±0%
+    ## [1] Null, mu1-mu2=0 : 4.216068 ±0%
     ## 
     ## Against denominator:
     ##   Alternative, r = 0.707106781186548, mu =/= 0 
@@ -134,7 +134,7 @@ library("BayesFactor")
 Predictions of different priors
 -------------------------------
 
-The primary strength of the package `bayesEd` is that Bayes factors for different priors can be computed and visualized. This may be used for educational purposes, e.g., to teach the Bayes factor to students. The following is a gallery for different priors and their predictions. I use the data from the example above where I sampled 200 observations:
+The primary strength of the package `bayesEd` is that Bayes factors for different priors can be computed and visualized. This may be used for educational purposes, e.g., to teach the Bayes factor to students. The following is a gallery for different priors and their predictions. I use the data from the example above where I sampled 2x 100 observations from a population null effect:
 
 ``` r
 ## Use a point hypothesis as the alternative. In this case, the argument
