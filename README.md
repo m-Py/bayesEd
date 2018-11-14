@@ -157,7 +157,7 @@ marginal likelihoods is the Bayes factor.
 Evidence for the null hypothesis
 --------------------------------
 
-One of the strengths of Bayes factors is that they can relative quantify
+One of the strengths of Bayes factors is that they can quantify relative
 evidence in favor of a null hypothesis; classical significance tests
 relying on p-values do not offer this feature. Look at the following
 example code:
@@ -190,7 +190,7 @@ can compute this Bayes factor as the ratio of two marginal likelihoods:
     BF01
 
     ##        t 
-    ## 4.006515
+    ## 3.673082
 
 Here, the probability of the data under the null hypothesis is given by
 the probability density function for the t distribution `dt`. To compute
@@ -211,7 +211,7 @@ analysis above, we can also use the following code employing the package
 
     ## Bayes factor analysis
     ## --------------
-    ## [1] Null, mu1-mu2=0 : 4.006515 ±0%
+    ## [1] Null, mu1-mu2=0 : 3.673082 ±0%
     ## 
     ## Against denominator:
     ##   Alternative, r = 0.707106781186548, mu =/= 0 

@@ -167,7 +167,7 @@ marginal likelihoods is the Bayes factor.
 
 ## Evidence for the null hypothesis
 
-One of the strengths of Bayes factors is that they can relative quantify
+One of the strengths of Bayes factors is that they can quantify relative
 evidence in favor of a null hypothesis; classical significance tests
 relying on p-values do not offer this feature. Look at the following
 example code:
