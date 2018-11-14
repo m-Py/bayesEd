@@ -1,8 +1,7 @@
 ---
 author: Martin Papenberg
 output: 
-  md_document:
-    variant: markdown_github
+  md_document
 bibliography: ./man/lit.bib
 ---
 
@@ -66,9 +65,9 @@ for a description of all parameters that can be passed). In this case by
 default, the function assumes a Cauchy alternative hypothesis. The shape
 of the Cauchy distribution is described by a scaling parameter $r$; it
 describes the proportion of probability mass that lies between $-r$ and
-$r$. The default scaling parameter is sqrt2/2 ≈ 0.71, which is the also
-the default setting in the package `BayesFactor`.  The following plot
-illustrates the scaling parameter:
+$r$. The default scaling parameter is the square root of 2 divided by 2
+(≈ 0.71), which is the also the default setting in the package
+`BayesFactor`.  The following plot illustrates the scaling parameter:
 
 ```{r, echo = FALSE}
 visualize_prior()
@@ -81,8 +80,8 @@ legend("topright", legend = "Scaling parameter r", lty = 2, lwd = 3, col = "dark
 ```
 
 In this case, the alternative hypothesis assumes that Cohen's $d$ is in
-between -0.71 and 0.70 in 50% of all cases. Larger effect sizes are
-assumed to be less common. It is also possible to specify a different
+between -0.71 and 0.71 in 50% of all cases. Larger effect sizes are
+assumed to be less likely. It is also possible to specify a different
 prior as the alternative hypothesis. In this case, we have to specify
 the argument `alternative`; `alternative` is usually a function object
 describing our believe in the distribution of the population effect
@@ -142,9 +141,8 @@ The argument `alternative` works in the same way as for the function
 `visualize_priors`. Usually, it is a function object describing the
 distribution of effect sizes according to the alternative
 hypothesis. Again, the default alternative is a Cauchy prior with
-scaling parameter sqrt2/2 ≈ 0.71. The following call illustrates the
-predictions of the Cauchy prior and the null hypothesis for a sample
-size of 100:
+scaling parameter ≈ 0.71. The following call illustrates the predictions
+of the Cauchy prior and the null hypothesis for a sample size of 100:
 
 ```{r}
 visualize_predictions(n1 = 50, n2 = 50)
