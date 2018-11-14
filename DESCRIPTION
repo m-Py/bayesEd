@@ -1,12 +1,13 @@
 Package: bayesEd
 Type: Package
-Title: Bayes factor education: Understanding the Bayes factor t-Test
+Title: Bayes factor education: Understanding the Bayesian t-Test
 Version: 0.1.0
 Author: Martin Papenberg
 Maintainer: Martin Papenberg <martin.papenberg@hhu.de>
 Description: Offers functions to visualize prior distributions and data 
-    predictions for the Bayes factor t-Test. Also includes functions to compute the 
-    expected sizes of Bayes factors given sample size and effect size.
+    predictions for the Bayesian t-Test (i.e., the Bayes factor). Also includes 
+    functions to compute the expected sizes of Bayes factors given sample size 
+    and effect size.
 License: Unlicense
 Encoding: UTF-8
 LazyData: true
