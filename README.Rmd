@@ -66,9 +66,9 @@ for a description of all parameters that can be passed). In this case by
 default, the function assumes a Cauchy alternative hypothesis. The shape
 of the Cauchy distribution is described by a scaling parameter $r$; it
 describes the proportion of probability mass that lies between $-r$ and
-$r$. The default scaling parameter is $\frac{\sqrt{2}}{2} \approx 0.71$,
-which is the also the default setting in the package `BayesFactor`.  The
-following plot illustrates the scaling parameter:
+$r$. The default scaling parameter is sqrt2/2 ≈ 0.71, which is the also
+the default setting in the package `BayesFactor`.  The following plot
+illustrates the scaling parameter:
 
 ```{r, echo = FALSE}
 visualize_prior()
@@ -142,8 +142,8 @@ The argument `alternative` works in the same way as for the function
 `visualize_priors`. Usually, it is a function object describing the
 distribution of effect sizes according to the alternative
 hypothesis. Again, the default alternative is a Cauchy prior with
-scaling parameter $\frac{\sqrt{2}}{2}$. The following call illustrates
-the predictions of the Cauchy prior and the null hypothesis for a sample
+scaling parameter sqrt2/2 ≈ 0.71. The following call illustrates the
+predictions of the Cauchy prior and the null hypothesis for a sample
 size of 100:
 
 ```{r}
@@ -213,8 +213,8 @@ population mean, i.e., the effect size in the population is zero. More
 often than not, I will obtain a Bayes factor that favors the null
 hypothesis over the alternative hypothesis. To illustrate the evidence
 in favor of the null as compared to the null hypothesis, I set the
-argument `BF10` to `FALSE`; run the code to see what happens when I do
-not do this.
+argument `BF10` to `FALSE`; run the code to see what happens when this
+is not done .
 
 I encourage to use the package `BayesFactor` to compute Bayes factors
 for the t-test that offers more functionality like, for example, the
@@ -226,5 +226,30 @@ analysis above, we can also use the following code employing the package
 library("BayesFactor")
 1 / ttestBF(group1, group2) # inverse Bayes factor; evidence for null hypothesis
 ```
+
+## Predictions of different priors
+
+The primary strength of the package `bayesEd` is that Bayes factors for
+different priors can be computed and visualized. This may be used for
+educational purposes, e.g., to teach the Bayes factor to students. The
+following is a gallery for different priors and their predictions. I use
+the data from the example above where I sampled 200 observations: 
+
+```{r}
+## Use a point hypothesis as the alternative. In this case, the argument
+## alternative is not a function object, but a scalar number:
+visualize_prior(0.4)
+visualize_predictions(alternative = 0.4, n1 = groupn, n2 = groupn, observed_t = tvalue)
+
+## Use a normal distribution as the alternative
+normal_alt <- function(x) dnorm(x, mean = 0.5, sd = 0.3)
+visualize_prior(normal_alt)
+visualize_predictions(alternative = normal_alt, n1 = groupn, n2 = groupn,
+                      observed_t = tvalue, from = -4, to = 8, BFx = 4,
+                      BFy = dt(0, 198) * 0.9, BF10 = FALSE)
+```
+
+Also see `?visualize_predictions` for a description of all arguments of
+the function.
 
 # References

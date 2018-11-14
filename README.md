@@ -28,7 +28,7 @@ visualize_prior()
 
 ![](README_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
-The function `visualize_prior` is the first function from the package `bayesEd` that we are using; it simply draws the hypotheses. I called the function without specifying any arguments (see `?visualize_prior` for a description of all parameters that can be passed). In this case by default, the function assumes a Cauchy alternative hypothesis. The shape of the Cauchy distribution is described by a scaling parameter *r*; it describes the proportion of probability mass that lies between −*r* and *r*. The default scaling parameter is $\\frac{\\sqrt{2}}{2} \\approx 0.71$, which is the also the default setting in the package `BayesFactor`. The following plot illustrates the scaling parameter:
+The function `visualize_prior` is the first function from the package `bayesEd` that we are using; it simply draws the hypotheses. I called the function without specifying any arguments (see `?visualize_prior` for a description of all parameters that can be passed). In this case by default, the function assumes a Cauchy alternative hypothesis. The shape of the Cauchy distribution is described by a scaling parameter *r*; it describes the proportion of probability mass that lies between −*r* and *r*. The default scaling parameter is sqrt2/2 ≈ 0.71, which is the also the default setting in the package `BayesFactor`. The following plot illustrates the scaling parameter:
 
 ![](README_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
@@ -67,7 +67,7 @@ visualize_predictions(alternative = NULL, n1 = 50, n2 = 50)
 
 The function `visualize_predictions` illustrates the predictions of hypotheses. Here, I only wanted to illustrate the predictions of the null hypothesis and therefore, I set the argument `alternative` to `NULL`. Note that the predictions of a hypothesis do not only depend on the prior, but also on the sample size. For this reason, I used the parameters `n1` and `n2` to specify two hypothetical group sizes of 50, yielding a total *n* of 100.
 
-The argument `alternative` works in the same way as for the function `visualize_priors`. Usually, it is a function object describing the distribution of effect sizes according to the alternative hypothesis. Again, the default alternative is a Cauchy prior with scaling parameter $\\frac{\\sqrt{2}}{2}$. The following call illustrates the predictions of the Cauchy prior and the null hypothesis for a sample size of 100:
+The argument `alternative` works in the same way as for the function `visualize_priors`. Usually, it is a function object describing the distribution of effect sizes according to the alternative hypothesis. Again, the default alternative is a Cauchy prior with scaling parameter sqrt2/2 ≈ 0.71. The following call illustrates the predictions of the Cauchy prior and the null hypothesis for a sample size of 100:
 
 ``` r
 visualize_predictions(n1 = 50, n2 = 50)
@@ -113,7 +113,7 @@ visualize_predictions(n1 = groupn, n2 = groupn, observed_t = tvalue, BF10 = FALS
 
 ![](README_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
-Here, I sample 100 observations per group that do not differ in their population mean, i.e., the effect size in the population is zero. More often than not, I will obtain a Bayes factor that favors the null hypothesis over the alternative hypothesis. To illustrate the evidence in favor of the null as compared to the null hypothesis, I set the argument `BF10` to `FALSE`; run the code to see what happens when I do not do this.
+Here, I sample 100 observations per group that do not differ in their population mean, i.e., the effect size in the population is zero. More often than not, I will obtain a Bayes factor that favors the null hypothesis over the alternative hypothesis. To illustrate the evidence in favor of the null as compared to the null hypothesis, I set the argument `BF10` to `FALSE`; run the code to see what happens when this is not done .
 
 I encourage to use the package `BayesFactor` to compute Bayes factors for the t-test that offers more functionality like, for example, the possibility to compute Bayes factors for paired t-tests. To reproduce my analysis above, we can also use the following code employing the package `BayesFactor`:
 
@@ -124,12 +124,49 @@ library("BayesFactor")
 
     ## Bayes factor analysis
     ## --------------
-    ## [1] Null, mu1-mu2=0 : 4.689428 ±0%
+    ## [1] Null, mu1-mu2=0 : 6.485053 ±0%
     ## 
     ## Against denominator:
     ##   Alternative, r = 0.707106781186548, mu =/= 0 
     ## ---
     ## Bayes factor type: BFindepSample, JZS
+
+Predictions of different priors
+-------------------------------
+
+The primary strength of the package `bayesEd` is that Bayes factors for different priors can be computed and visualized. This may be used for educational purposes, e.g., to teach the Bayes factor to students. The following is a gallery for different priors and their predictions. I use the data from the example above where I sampled 200 observations:
+
+``` r
+## Use a point hypothesis as the alternative. In this case, the argument
+## alternative is not a function object, but a scalar number:
+visualize_prior(0.4)
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-13-1.png)
+
+``` r
+visualize_predictions(alternative = 0.4, n1 = groupn, n2 = groupn, observed_t = tvalue)
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-13-2.png)
+
+``` r
+## Use a normal distribution as the alternative
+normal_alt <- function(x) dnorm(x, mean = 0.5, sd = 0.3)
+visualize_prior(normal_alt)
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-13-3.png)
+
+``` r
+visualize_predictions(alternative = normal_alt, n1 = groupn, n2 = groupn,
+                      observed_t = tvalue, from = -4, to = 8, BFx = 4,
+                      BFy = dt(0, 198) * 0.9, BF10 = FALSE)
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-13-4.png)
+
+Also see `?visualize_predictions` for a description of all arguments of the function.
 
 References
 ==========
