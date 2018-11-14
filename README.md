@@ -25,17 +25,17 @@ Visualize prior distributions
 Bayes factors contrast the ability of hypotheses to predict observed
 data. In the case of the t-test, two hypotheses -- a null hypothesis and
 an alternative hypothesis -- are contrasted in their ability to predict
-an observed t-value.[1] In the context of Bayesian statistics,
-hypotheses are also often referred to by the term "prior". The first
-step in understanding Bayes factors is to understand the
-hypotheses/priors. In the case of a Bayesian t-test, both hypotheses
-have assumptions about the population effect size *d* (Cohen 1988). The
-null hypothesis always assumes that *d* = 0, i.e., that there is no
-effect in the population. The default alternative hypothesis -- proposed
-to be used by psychologists by Rouder et al. (2009) -- assumes that
-there is an effect in the population. It postulates that the
-distribution of *d* is described by a Cauchy distribution. The following
-plot visualizes the Cauchy distribution:
+an observed t-value. In the context of Bayesian statistics, hypotheses
+are also often referred to by the term "prior". The first step in
+understanding Bayes factors is to understand the hypotheses/priors. In
+the case of a Bayesian t-test, both hypotheses have assumptions about
+the population effect size *d* (Cohen 1988). The null hypothesis always
+assumes that *d* = 0, i.e., that there is no effect in the population.
+The default alternative hypothesis -- proposed to be used by
+psychologists by Rouder et al. (2009) -- assumes that there is an effect
+in the population. It postulates that the distribution of *d* is
+described by a Cauchy distribution. The following plot visualizes the
+Cauchy distribution:
 
     ## Draw default hypotheses:
     visualize_prior()
@@ -45,17 +45,25 @@ plot visualizes the Cauchy distribution:
 The function `visualize_prior` is the first function from the package
 `bayesEd` that we are using; it simply draws the hypotheses. I called
 the function without specifying any arguments (see `?visualize_prior`
-for a description of all parameters that can be passed). In this case by
-default, the function assumes a Cauchy alternative hypothesis. The shape
-of the Cauchy distribution is described by a scaling parameter *r*; it
-describes the proportion of probability mass that lies between −*r* and
-*r*. The default scaling parameter is the square root of 2 divided by 2
-(≈ 0.71), which is the also the default setting in the package
-`BayesFactor`. The following plot illustrates the scaling parameter:
+for a description of all parameters that can be passed). In this case
+the function assumes a Cauchy alternative hypothesis by default. The
+shape of the Cauchy distribution is described by a scaling parameter
+*r*; it describes the proportion of probability that lies between −*r*
+and *r*. The default scaling parameter is the square root of 2 divided
+by 2 (≈ 0.71), which is the also the default setting in the package
+`BayesFactor`. The following plot illustrates this scaling parameter:
+
+    visualize_prior()
+    lines(x = rep(-sqrt(2)/2, 2), y = c(0, dcauchy(sqrt(2) / 2, scale = sqrt(2)/2)),
+          lwd = 3, lty = 2, col = "darkgrey")
+    lines(x = rep(sqrt(2)/2, 2), y = c(0, dcauchy(sqrt(2) / 2, scale = sqrt(2)/2)),
+          lwd = 3, lty = 2, col = "darkgrey")
+    legend("topright", legend = "Scaling parameter r", lty = 2, lwd = 3, col = "darkgrey",
+           bty = "n")
 
 ![](README_files/figure-markdown_strict/unnamed-chunk-4-1.png)
 
-In this case, the alternative hypothesis assumes that Cohen's *d* is in
+Thus, the default alternative hypothesis assumes that Cohen's *d* is in
 between -0.71 and 0.71 in 50% of all cases. Larger effect sizes are
 assumed to be less likely. It is also possible to specify a different
 prior as the alternative hypothesis. In this case, we have to specify
@@ -146,21 +154,6 @@ illustrate the so called *marginal likelihoods*, i.e., the probability
 density of the observed data under each hypothesis. The ratio of the
 marginal likelihoods is the Bayes factor.
 
-Using the function `marginal_likelihood` from the package `bayesEd`, we
-can compute this Bayes factor as the ratio of two marginal likelihoods:
-
-    null_marginal <- dt(4, 98)
-    alt_marginal <- marginal_likelihood(4, n1 = 50, n2 = 50)
-    BF10 <- alt_marginal / null_marginal
-
-Here, the probability of the data under the null hypothesis is given by
-the probability density function for the t distribution `dt`. To compute
-the probability of the data under the alternative hypothesis, we use the
-function `marginal_likelihood`. As the previous functions that we saw
-(`visualize_prior` and `visualize_predictions`), `marginal_likelihood`
-also has an argument `alternative` that specifies the prior distribution
-for the alternative hypothesis. It also has the same Cauchy default.
-
 Evidence for the null hypothesis
 --------------------------------
 
@@ -178,7 +171,7 @@ example code:
 
     visualize_predictions(n1 = groupn, n2 = groupn, observed_t = tvalue, BF10 = FALSE)
 
-![](README_files/figure-markdown_strict/unnamed-chunk-11-1.png)
+![](README_files/figure-markdown_strict/unnamed-chunk-10-1.png)
 
 Here, I sample 100 observations per group that do not differ in their
 population mean, i.e., the effect size in the population is zero. More
@@ -187,6 +180,25 @@ hypothesis over the alternative hypothesis. To illustrate the evidence
 in favor of the null as compared to the null hypothesis, I set the
 argument `BF10` to `FALSE`; run the code to see what happens when this
 is not done .
+
+Using the function `marginal_likelihood` from the package `bayesEd`, we
+can compute this Bayes factor as the ratio of two marginal likelihoods:
+
+    null_marginal <- dt(tvalue, df = groupn * 2 - 2)
+    alt_marginal <- marginal_likelihood(tvalue, n1 = groupn, n2 = groupn)
+    BF01 <- null_marginal / alt_marginal
+    BF01
+
+    ##        t 
+    ## 4.006515
+
+Here, the probability of the data under the null hypothesis is given by
+the probability density function for the t distribution `dt`. To compute
+the probability of the data under the alternative hypothesis, we use the
+function `marginal_likelihood`. As the previous functions that we saw
+(`visualize_prior` and `visualize_predictions`), `marginal_likelihood`
+also has an argument `alternative` that specifies the prior distribution
+for the alternative hypothesis. It also has the same Cauchy default.
 
 I encourage to use the package `BayesFactor` to compute Bayes factors
 for the t-test that offers more functionality like, for example, the
@@ -199,7 +211,7 @@ analysis above, we can also use the following code employing the package
 
     ## Bayes factor analysis
     ## --------------
-    ## [1] Null, mu1-mu2=0 : 5.244462 ±0%
+    ## [1] Null, mu1-mu2=0 : 4.006515 ±0%
     ## 
     ## Against denominator:
     ##   Alternative, r = 0.707106781186548, mu =/= 0 
@@ -254,7 +266,3 @@ Factors for Common Designs*.
 Rouder, J N, P L Speckman, D Sun, R D Morey, and G Iverson. 2009.
 “Bayesian T Tests for Accepting and Rejecting the Null Hypothesis.”
 *Psychonomic Bulletin & Review* 16 (2). Springer: 225–37.
-
-[1] In general, Bayes factors do not require that one of the hypotheses
-is a null hypothesis. But it is often the case, especially for default
-Bayes factors.
