@@ -1,13 +1,4 @@
 
-## Author: Martin Papenberg, inspired from a blog post by Jeff Rouder 
-## (http://jeffrouder.blogspot.com/2016/01/what-priors-should-i-use-part-i.html) 
-
-## This file contains functions to visualize Bayes factors (prior and
-## marginal likelihoods), and computes t-test Bayes factors for the
-## comparison of two group means. The code is meant for educational
-## purposes only; to actually compute Bayes factors, I encourage the use
-## of the `BayesFactor` package.
-
 #' Visualize a prior on Cohen's d for a Bayesian t-test
 #' 
 #' @param alternative A function object. The default is a Cauchy prior
