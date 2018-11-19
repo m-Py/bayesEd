@@ -113,7 +113,7 @@ visualize_predictions(n1 = groupn, n2 = groupn, observed_t = tvalue, BF10 = FALS
 
 ![](README_files/figure-markdown_github/unnamed-chunk-10-1.png)
 
-Here, I sample 100 observations per group that do not differ in their population mean, i.e., the effect size in the population is zero. More often than not, I will obtain a Bayes factor that favors the null hypothesis over the alternative hypothesis. To illustrate the evidence in favor of the null as compared to the null hypothesis, I set the argument `BF10` to `FALSE`; run the code to see what happens when this is not done .
+Here, I sample 100 observations per group that do not differ in their population mean, i.e., the effect size in the population is zero. More often than not, I will obtain a Bayes factor that favors the null hypothesis over the alternative hypothesis. To illustrate the evidence in favor of the null as compared to the alternative hypothesis, I set the argument `BF10` to `FALSE`; run the code to see what happens when this is not done .
 
 Using the function `marginal_likelihood` from the package `bayesEd`, we can compute this Bayes factor as the ratio of two marginal likelihoods:
 
@@ -124,8 +124,8 @@ BF01 <- null_marginal / alt_marginal
 BF01
 ```
 
-    ##       t 
-    ## 6.24709
+    ##        t 
+    ## 6.475811
 
 Here, the probability of the data under the null hypothesis is given by the probability density function for the t distribution `dt`. To compute the probability of the data under the alternative hypothesis, we use the function `marginal_likelihood`. As the previous functions that we saw (`visualize_prior` and `visualize_predictions`), `marginal_likelihood` also has an argument `alternative` that specifies the prior distribution for the alternative hypothesis. It also has the same Cauchy default.
 
@@ -133,12 +133,25 @@ I encourage to use the package `BayesFactor` to compute Bayes factors for the t-
 
 ``` r
 library("BayesFactor")
+```
+
+    ## Loading required package: coda
+
+    ## Loading required package: Matrix
+
+    ## ************
+    ## Welcome to BayesFactor 0.9.12-4.2. If you have questions, please contact Richard Morey (richarddmorey@gmail.com).
+    ## 
+    ## Type BFManual() to open the manual.
+    ## ************
+
+``` r
 1 / ttestBF(group1, group2) # inverse Bayes factor; evidence for null hypothesis
 ```
 
     ## Bayes factor analysis
     ## --------------
-    ## [1] Null, mu1-mu2=0 : 6.24709 ±0%
+    ## [1] Null, mu1-mu2=0 : 6.475811 ±0%
     ## 
     ## Against denominator:
     ##   Alternative, r = 0.707106781186548, mu =/= 0 

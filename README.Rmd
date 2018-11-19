@@ -190,9 +190,9 @@ Here, I sample 100 observations per group that do not differ in their
 population mean, i.e., the effect size in the population is zero. More
 often than not, I will obtain a Bayes factor that favors the null
 hypothesis over the alternative hypothesis. To illustrate the evidence
-in favor of the null as compared to the null hypothesis, I set the
-argument `BF10` to `FALSE`; run the code to see what happens when this
-is not done .
+in favor of the null as compared to the alternative hypothesis, I set
+the argument `BF10` to `FALSE`; run the code to see what happens when
+this is not done .
 
 
 Using the function `marginal_likelihood` from the package `bayesEd`, we
