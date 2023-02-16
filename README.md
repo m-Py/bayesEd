@@ -1,7 +1,7 @@
 bayesEd
 =======
 
-`bayesEd` is an R-package that aims to help to understand the logic of Bayes factors by visualization and by the example of the Bayesian t-test for independent groups. Much of the code in the package was inspired by a blog post by Jeff Rouder (<http://jeffrouder.blogspot.com/2016/01/what-priors-should-i-use-part-i.html>) and extends it to easily usable functions. The code is primarily meant for educational purposes; to actually compute Bayes factors, I encourage the use of the `BayesFactor` package (Morey and Rouder 2015).
+`bayesEd` is an R-package that aims to help to understand the logic of Bayes factors by visualization and by the example of the Bayesian t-test for independent groups. Much of the code in the package was inspired by a [blog post by Jeff Rouder](https://psyarxiv.com/nvsm5/) and extends it to easily usable functions. The code is primarily meant for educational purposes; to actually compute Bayes factors, I encourage the use of the [`BayesFactor` package](https://richarddmorey.github.io/BayesFactor/) (Morey and Rouder 2015).
 
 Installation
 ============
