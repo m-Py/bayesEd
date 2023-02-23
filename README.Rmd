@@ -76,8 +76,8 @@ legend("topright", legend = "Scaling parameter r", lty = 2, lwd = 3, col = "dark
        bty = "n")
 ```
 
-Thus, the default alternative hypothesis assumes that Cohen's $d$ is in
-between -0.71 and 0.71 in 50% of all cases. Larger effect sizes are
+Thus, the default alternative hypothesis is 50% confident that Cohen's
+$d$ lies between the values of -0.71 and 0.71. Larger effect sizes are
 assumed to be less likely. It is also possible to specify a different
 prior as the alternative hypothesis. In this case, we have to specify
 the argument `alternative`; `alternative` is usually a function object

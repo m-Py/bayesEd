@@ -42,7 +42,7 @@ legend("topright", legend = "Scaling parameter r", lty = 2, lwd = 3, col = "dark
 
 ![](README_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
-Thus, the default alternative hypothesis assumes that Cohen's *d* is in between -0.71 and 0.71 in 50% of all cases. Larger effect sizes are assumed to be less likely. It is also possible to specify a different prior as the alternative hypothesis. In this case, we have to specify the argument `alternative`; `alternative` is usually a function object describing our believe in the distribution of the population effect size. For example, we may specify an alternative that describes the population effect size as a normal distribution with mean = 0.5 and *SD* = 0.3.
+Thus, the default alternative hypothesis is 50% confident that Cohen's *d* lies between the values of -0.71 and 0.71. Larger effect sizes are assumed to be less likely. It is also possible to specify a different prior as the alternative hypothesis. In this case, we have to specify the argument `alternative`; `alternative` is usually a function object describing our believe in the distribution of the population effect size. For example, we may specify an alternative that describes the population effect size as a normal distribution with mean = 0.5 and *SD* = 0.3.
 
 ``` r
 normal_alt <- function(x) dnorm(x, mean = 0.5, sd = 0.3)
